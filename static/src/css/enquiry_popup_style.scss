@@ -1,0 +1,74 @@
+/* Popup width (full dialog) */
+.o_dialog:has(.popup_enq_small) .modal-dialog {
+    max-width: 600px !important;
+    width: 600px !important;
+}
+
+/* (Optional) small visual tweaks on the form */
+.popup_enq_small .o_form_sheet_bg {
+    padding: 15px 30px;
+}
+
+.nice_popup {
+    border-radius: 10px;
+}
+
+/* Footer buttons centered */
+.popup_enq_small footer {
+    text-align: center !important;
+}
+
+.popup_enq_small footer .btn {
+    min-width: 80px;
+    border-radius: 6px;
+}
+
+/* Center the question text in the popup */
+.popup_enq_small .text-center.mb16 {
+    text-align: center;
+    white-space: nowrap;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+/* ✅ Center the whole Remarks row (group table) */
+.popup_enq_small .o_group {
+    text-align: center;
+}
+
+.popup_enq_small .o_group table {
+    margin-left: auto !important;
+    margin-right: auto !important;   /* centers the table */
+}
+
+.popup_enq_small .o_group .o_td_label {
+    text-align: center;
+    padding-right: 0px;
+    font-weight: 200 ;            /* small gap before the line */
+}
+
+/* Make ONLY the remarks input look like a long underline */
+.popup_enq_small .remarks_line .o_input {
+    border: none !important;                 /* no box */
+    border-bottom: 2px solid #777 !important;/* underline */
+    padding: 6px 4px !important;
+    width: 350px !important;                 /* change this to 300/350px if you want longer */
+    background: transparent !important;
+    outline: none !important;
+    font-size: 14px;
+}
+.o_list_view td.item_name_multiline {
+    white-space: pre-wrap !important;   /* respect \n and wrap */
+    text-overflow: initial !important;  /* remove ... */
+    overflow: visible !important;       /* show full lines */
+}
+/* Center align sale count column in quotation list view */
+.o_list_view td.sale_count_center {
+    text-align: center !important;
+}
+
+/* Hide "Individual" option from the company_type radio widget on the partner form.
+   "person" is always the first radio item per the base selection definition. */
+.o_form_view .o_field_radio[name="company_type"] .o_radio_item:first-child {
+    display: none !important;
+}

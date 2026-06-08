@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Outward Remark options (dynamic — users can add more from Configuration) -->
+    <record id="outward_remark_demo" model="stock.picking.outward.remark">
+        <field name="name">Demo</field>
+        <field name="sequence">1</field>
+    </record>
+    <record id="outward_remark_standby" model="stock.picking.outward.remark">
+        <field name="name">Standby</field>
+        <field name="sequence">2</field>
+    </record>
+</odoo>

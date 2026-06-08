@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_bulk_serial_upload_wizard_form" model="ir.ui.view">
+        <field name="name">bulk.serial.upload.wizard.form</field>
+        <field name="model">bulk.serial.upload.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Bulk Upload Serial Numbers">
+
+                <!-- Step guide -->
+                <div class="alert alert-info py-2 mb-0" role="alert"
+                     style="font-size:13px; line-height:1.8;"
+                     invisible="not has_serial_products">
+                    <strong><field name="picking_count" readonly="1"/> DC(s) selected.</strong>
+                    <br/>
+                    <b>Step 1:</b>&#160; Choose identifier &#8594; Download Quantity Template
+                               &#8594; Edit quantities &#8594; Upload quantity file
+                               &#8594; Click &#34;Generate Serial Template&#34;
+                    <br/>
+                    <b>Step 2:</b>&#160; Fill Serial Number column in downloaded file
+                               &#8594; Upload serial file &#8594; Click &#34;Import &#38; Validate&#34;
+                </div>
+                <div class="alert alert-info py-2 mb-0" role="alert"
+                     style="font-size:13px; line-height:1.8;"
+                     invisible="has_serial_products">
+                    <strong><field name="picking_count" readonly="1"/> DC(s) selected.</strong>
+                    &#160; No serial number products found &#8212; only auto-assigned products.
+                    <br/>
+                    Download Quantity Template &#8594; Edit quantities &#8594; Upload quantity file
+                    &#8594; Click &#34;Import &#38; Validate&#34;
+                </div>
+
+                <!-- Hidden computed fields used in modifiers -->
+                <field name="has_serial_products" invisible="1"/>
+
+                <!-- Identifier -->
+                <group>
+                    <field name="dc_identifier" widget="radio" string="Identify DCs by"/>
+                </group>
+
+                <!-- Step 1 -->
+                <separator string="Step 1 — Upload Quantity File"/>
+                <group>
+                    <field name="qty_file"
+                           filename="qty_filename"
+                           widget="binary"
+                           string="Quantity File (.xlsx)"/>
+                    <field name="qty_filename" invisible="1"/>
+                </group>
+
+                <!-- Step 2: only shown when serial products exist -->
+                <separator string="Step 2 — Upload Serial File"
+                           invisible="not has_serial_products"/>
+                <group invisible="not has_serial_products">
+                    <field name="import_file"
+                           filename="import_filename"
+                           widget="binary"
+                           string="Serial File (.xlsx)"/>
+                    <field name="import_filename" invisible="1"/>
+                </group>
+
+                <!-- Selected DCs -->
+                <separator string="Selected DCs"/>
+                <field name="picking_ids" readonly="1" nolabel="1">
+                    <tree create="false" delete="false" limit="10">
+                        <field name="dc_number"      string="DC Number"/>
+                        <field name="name"           string="Reference"/>
+                        <field name="partner_id"     string="Customer"/>
+                        <field name="scheduled_date" string="Date"   optional="show"/>
+                        <field name="state"          string="Status" widget="badge"
+                               decoration-success="state == 'done'"
+                               decoration-warning="state == 'assigned'"
+                               decoration-info="state in ('confirmed','waiting')"
+                               decoration-muted="state == 'cancel'"/>
+                    </tree>
+                </field>
+
+                <footer>
+                    <button string="Download Quantity Template"
+                            type="object"
+                            name="action_download_template"
+                            class="btn-secondary"
+                            icon="fa-download"/>
+                    <button string="Generate Serial Template"
+                            type="object"
+                            name="action_generate_serial_template"
+                            class="btn-secondary"
+                            icon="fa-list-ol"
+                            invisible="not qty_file or not has_serial_products"/>
+                    <button string="Import &#38; Validate"
+                            type="object"
+                            name="action_import_serials"
+                            class="btn-primary"
+                            icon="fa-upload"
+                            invisible="not import_file and (has_serial_products or not qty_file)"/>
+                    <button string="Cancel"
+                            class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+
+            </form>
+        </field>
+    </record>
+</odoo>

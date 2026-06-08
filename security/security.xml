@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Create Module Category -->
+    <record id="module_category_erp_teams" model="ir.module.category">
+        <field name="name">ERP Teams</field>
+        <field name="description">Access rights for different ERP teams</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Sales Team Group -->
+    <record id="group_sales_team" model="res.groups">
+        <field name="name">Sales Team</field>
+        <field name="category_id" ref="module_category_erp_teams"/>
+        <field name="comment">Access to sales-related menus only</field>
+    </record>
+
+    <!-- Purchase Team Group -->
+    <record id="group_purchase_team" model="res.groups">
+        <field name="name">Purchase Team</field>
+        <field name="category_id" ref="module_category_erp_teams"/>
+        <field name="comment">Access to purchase-related menus</field>
+    </record>
+
+    <!-- Accounting Team Group -->
+    <record id="group_accounting_team" model="res.groups">
+        <field name="name">Accounting Team</field>
+        <field name="category_id" ref="module_category_erp_teams"/>
+        <field name="comment">Access to accounting-related menus</field>
+    </record>
+
+    <!-- Inventory Team Group -->
+    <record id="group_inventory_team" model="res.groups">
+        <field name="name">Inventory Team</field>
+        <field name="category_id" ref="module_category_erp_teams"/>
+        <field name="comment">Access to inventory management</field>
+    </record>
+
+    <!-- Procurement Team Group -->
+    <record id="group_procurement_team" model="res.groups">
+        <field name="name">Procurement Team</field>
+        <field name="category_id" ref="module_category_erp_teams"/>
+        <field name="comment">Access to procurement operations</field>
+    </record>
+
+    <!-- Logistics Team Group -->
+    <record id="group_logistics_team" model="res.groups">
+        <field name="name">Logistics Team</field>
+        <field name="category_id" ref="module_category_erp_teams"/>
+        <field name="comment">Access to logistics and delivery</field>
+    </record>
+
+    <!-- Administration Group (Full Access) -->
+    <record id="group_administration" model="res.groups">
+        <field name="name">Administration</field>
+        <field name="category_id" ref="module_category_erp_teams"/>
+        <field name="implied_ids" eval="[(4, ref('group_sales_team')),
+                                          (4, ref('group_purchase_team')),
+                                          (4, ref('group_accounting_team')),
+                                          (4, ref('group_inventory_team')),
+                                          (4, ref('group_procurement_team')),
+                                          (4, ref('group_logistics_team'))]"/>
+        <field name="comment">Full administrative access to all modules</field>
+    </record>
+
+    <!-- Record Rules for customer.enq -->
+
+    <!-- Sales Team: can only see records they created or where they are the assigned salesperson -->
+    <record id="rule_customer_enq_sales_team_own" model="ir.rule">
+        <field name="name">Customer Enquiry: Sales Team - Own Records Only</field>
+        <field name="model_id" ref="model_customer_enq"/>
+        <field name="domain_force">['|', ('create_uid', '=', user.id), ('salesperson_user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_sales_team'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- Administration: can see all records (overrides the Sales Team restriction for admins) -->
+    <record id="rule_customer_enq_admin_all" model="ir.rule">
+        <field name="name">Customer Enquiry: Administration - See All Records</field>
+        <field name="model_id" ref="model_customer_enq"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_administration'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+</odoo>

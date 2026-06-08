@@ -1,0 +1,88 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_picking_outward_remark,stock.picking.outward.remark,model_stock_picking_outward_remark,,1,1,1,1
+access_customer_enq,customer.enq,model_customer_enq,,1,1,1,1
+access_item_details,access_item_details,model_item_details,,1,1,1,1
+access_item_details_line,access_item_details_line,model_item_details_line,,1,1,1,1
+access_res_partner_oem,Access OEM Rank,model_res_partner,,1,1,1,0
+access_order_enq,access.order.enq,model_order_enq,,1,1,1,1
+access_order_enq_lines,access.order.enq.lines,model_order_enq_lines,,1,1,1,1
+access_order_item_lines,access.order.item.lines,model_order_item_lines,,1,1,1,1
+
+access_quotation_management,access_quotation_management,model_quotation_management,base.group_user,1,1,1,1
+access_quotation_product_line,access_quotation_product_line,model_quotation_product_line,base.group_user,1,1,1,1
+access_quotation_item_lines,access_quotation_item_lines,model_quotation_item_lines,base.group_user,1,1,1,1
+
+access_quotation_version_history,Quotation Version History,model_quotation_version_history,,1,1,1,1
+
+access_consignee_separation_user,User Access for Consignee Separation,model_consignee_separation,,1,1,1,1
+access_consignee_separation_manager,Manager Access for Consignee Separation,model_consignee_separation,base.group_system,1,1,1,1
+access_consignee_separation_item_line,Access for Consignee Item Line,model_consignee_separation_item_line,,1,1,1,1
+access_consignee_separation_product_line,Access for Consignee Product Line,model_consignee_separation_product_line,,1,1,1,1
+
+access_sale_order_item_line,access_sale_order_item_line,model_sale_order_item_line,base.group_user,1,1,1,1
+
+
+
+access_financial_year,access.financial.year,model_financial_year,,1,1,1,1
+
+access_stock_picking_item_line,access_stock_picking_item_line,model_stock_picking_item_line,base.group_user,1,1,1,1
+
+
+access_internal_transfer,access_internal_transfer,model_internal_transfer,,1,1,1,1
+access_internal_transfer_lot_line,access_internal_transfer_lot_line,model_internal_transfer_lot_line,,1,1,1,1
+internal_transfer_outward_rule,Outward Transfer Rule,model_internal_transfer_outward_line,base.group_user,1,1,1,1
+internal_transfer_inward_rule,Inward Transfer Rule,model_internal_transfer_inward_line,base.group_user,1,1,1,1
+
+
+access_split_dc_wizard,access.split.dc.wizard,model_split_dc_wizard,base.group_user,1,1,1,1
+access_split_dc_wizard_line,access.split.dc.wizard.line,model_split_dc_wizard_line,base.group_user,1,1,1,1
+
+access_demo_inward_lot_line,access.demo.inward.lot.line,model_demo_inward_lot_line,base.group_user,1,1,1,1
+
+
+access_lot_reassign_wizard,access.lot.reassign.wizard,model_lot_reassign_wizard,base.group_user,1,1,1,1
+
+access_bulk_print_dc_wizard,access_bulk_print_dc_wizard,model_bulk_print_dc_wizard,stock.group_stock_user,1,1,1,1
+access_bulk_print_dc_wizard_manager,access_bulk_print_dc_wizard_manager,model_bulk_print_dc_wizard,stock.group_stock_manager,1,1,1,1
+
+
+access_partner_address_bulk_import_user,partner.address.bulk.import.user,model_partner_address_bulk_import,base.group_user,1,1,1,1
+access_partner_address_bulk_import_manager,partner.address.bulk.import.manager,model_partner_address_bulk_import,base.group_system,1,1,1,1
+
+access_delivery_booking_user,delivery.booking.user,model_delivery_booking,stock.group_stock_user,1,1,1,0
+access_delivery_booking_manager,delivery.booking.manager,model_delivery_booking,stock.group_stock_manager,1,1,1,1
+access_delivery_booking_product_line_user,delivery.booking.product.line.user,model_delivery_booking_product_line,stock.group_stock_user,1,1,1,0
+access_delivery_booking_product_line_manager,delivery.booking.product.line.manager,model_delivery_booking_product_line,stock.group_stock_manager,1,1,1,1
+access_delivery_booking_item_line_user,delivery.booking.item.line.user,model_delivery_booking_item_line,stock.group_stock_user,1,1,1,0
+access_delivery_booking_item_line_manager,delivery.booking.item.line.manager,model_delivery_booking_item_line,stock.group_stock_manager,1,1,1,1
+
+
+access_courier_partner_all,courier.partner.all,model_courier_partner,base.group_user,1,1,1,1
+access_customer_enq_close_wizard,access.customer.enq.close.wizard,model_customer_enq_close_wizard,,1,1,1,1
+access_order_enq_cancel_wizard,access.order.enq.cancel.wizard,model_order_enq_cancel_wizard,base.group_user,1,1,1,1
+access_quotation_inactive_wizard,access.quotation.inactive.wizard,model_quotation_inactive_wizard,base.group_user,1,1,1,1
+access_sale_order_cancel_wizard,sale.order.cancel.wizard,model_sale_order_cancel_wizard,base.group_user,1,1,1,1
+access_stock_picking_cancel_wizard,access_stock_picking_cancel_wizard,model_stock_picking_cancel_wizard,stock.group_stock_user,1,1,1,1
+access_purchase_order_cancel_wizard,purchase.order.cancel.wizard,model_purchase_order_cancel_wizard,,1,0,1,0
+
+access_delivery_period_master,access_delivery_period_master,model_delivery_period_master,,1,1,1,1
+access_quotation_reject_wizard,access_quotation_reject_wizard,model_quotation_reject_wizard,,1,1,1,1
+access_stock_picking_date_filter_user,stock.picking.date.filter user,model_stock_picking_date_filter,base.group_user,1,1,1,1
+access_purchase_order_date_filter,purchase.order.date.filter,model_purchase_order_date_filter,base.group_user,1,1,1,1
+access_zigma_ordered_for,zigma.ordered.for,model_zigma_ordered_for,,1,1,1,1
+access_stock_lot_generate_wizard,stock.lot.generate.wizard,model_stock_lot_generate_wizard,base.group_user,1,1,1,1
+access_zigma_duties_taxes,zigma.duties.taxes,model_zigma_duties_taxes,,1,1,1,1
+access_zigma_sundry_debtor,zigma.sundry.debtor,model_zigma_sundry_debtor,,1,1,1,1
+access_zigma_sundry_creditor,zigma.sundry.creditor,model_zigma_sundry_creditor,,1,1,1,1
+
+
+
+access_consignee_bulk_import_wizard,consignee.bulk.import.wizard,model_consignee_bulk_import_wizard,base.group_user,1,1,1,1
+access_consignee_bulk_import_wizard_line,consignee.bulk.import.wizard.line,model_consignee_bulk_import_wizard_line,base.group_user,1,1,1,1
+
+access_elcot_po_import_wizard,elcot.po.import.wizard,model_elcot_po_import_wizard,base.group_user,1,1,1,1
+access_elcot_po_import_item,elcot.po.import.item,model_elcot_po_import_item,base.group_user,1,1,1,1
+access_elcot_po_import_consignee,elcot.po.import.consignee,model_elcot_po_import_consignee,base.group_user,1,1,1,1
+access_elcot_po_import_consignee_item,elcot.po.import.consignee.item,model_elcot_po_import_consignee_item,base.group_user,1,1,1,1
+access_bulk_serial_upload_wizard,bulk.serial.upload.wizard,model_bulk_serial_upload_wizard,base.group_user,1,1,1,1
+access_stock_aging_report,stock.aging.report,model_stock_aging_report,base.group_user,1,0,0,0

@@ -1,0 +1,204 @@
+<odoo>
+ <record model="ir.module.category" id="account.module_category_accounting_bank">
+        <field name="name">Bank</field>
+        <field name="parent_id" ref="base.module_category_accounting"/>
+        <field name="sequence">50</field>
+    </record>
+     <record id="seq_product_code" model="ir.sequence">
+        <field name="name">Product Code Sequence</field>
+        <field name="code">product.template.code</field>
+        <field name="prefix">ITM</field>
+         <field name="suffix">/%(fiscal_year)s</field>
+    <field name="padding">5</field>
+    <field name="number_next">1</field>
+    <field name="number_increment">1</field>
+    <field name="implementation">standard</field>
+    <field name="active">True</field>
+    <field name="use_date_range">True</field>
+
+    </record>
+    <record id="seq_item_details_elcot" model="ir.sequence">
+        <field name="name">Item Details Elcot Sequence</field>
+        <field name="code">item.details.elcot</field>
+        <field name="prefix">ELC</field>
+         <field name="suffix">/%(fiscal_year)s</field>
+    <field name="padding">5</field>
+    <field name="number_next">1</field>
+    <field name="number_increment">1</field>
+    <field name="implementation">standard</field>
+    <field name="active">True</field>
+    <field name="use_date_range">True</field>
+    </record>
+    <record id="seq_customer_enq" model="ir.sequence">
+    <field name="name">Customer Enquiry</field>
+    <field name="code">customer.enq.sequence</field>
+    <field name="prefix">ENQ</field>
+    <field name="suffix">/%(fiscal_year)s</field>
+    <field name="padding">5</field>
+    <field name="number_next">1</field>
+    <field name="number_increment">1</field>
+    <field name="implementation">standard</field>
+    <field name="active">True</field>
+    <field name="use_date_range">True</field>
+</record>
+
+    <record id="seq_quotation_sequence_elcot" model="ir.sequence">
+        <field name="name">Quotation Sequence</field>
+        <field name="code">quotation.sequence</field>
+        <field name="prefix">QU</field>
+         <field name="suffix">/%(fiscal_year)s</field>
+    <field name="padding">5</field>
+    <field name="number_next">1</field>
+    <field name="number_increment">1</field>
+    <field name="implementation">standard</field>
+    <field name="active">True</field>
+    <field name="use_date_range">True</field>
+        
+    </record>
+    <record id="seq_item_details_others" model="ir.sequence">
+        <field name="name">Item Details Others Sequence</field>
+        <field name="code">item.details.others</field>
+        <field name="prefix">OTH</field>
+        <field name="suffix">/%(fiscal_year)s</field>
+    <field name="padding">5</field>
+    <field name="number_next">1</field>
+    <field name="number_increment">1</field>
+    <field name="implementation">standard</field>
+    <field name="active">True</field>
+    <field name="use_date_range">True</field>
+        
+    </record>
+
+   <record id="sequence_order_enq" model="ir.sequence">
+            <field name="name">Order Enquiry Sequence</field>
+            <field name="code">order.enq.sequence</field>
+            <field name="prefix">OL</field>
+            <field name="suffix">/%(fiscal_year)s</field>
+    <field name="padding">5</field>
+    <field name="number_next">1</field>
+    <field name="number_increment">1</field>
+    <field name="implementation">standard</field>
+    <field name="active">True</field>
+    <field name="use_date_range">True</field>
+        </record>
+
+   <record id="sequence_consignee_separation_enq" model="ir.sequence">
+            <field name="name">Consignee Separation Sequence</field>
+            <field name="code">consignee.separation.sequence</field>
+            <field name="prefix">CO</field>
+            <field name="suffix">/%(fiscal_year)s</field>
+    <field name="padding">5</field>
+    <field name="number_next">1</field>
+    <field name="number_increment">1</field>
+    <field name="implementation">standard</field>
+    <field name="active">True</field>
+    <field name="use_date_range">True</field>
+        </record>
+
+  <record id="seq_oem_code" model="ir.sequence">
+            <field name="name">OEM Code</field>
+            <field name="code">res.partner.oem.code</field>
+            <field name="prefix">OEM</field>
+            <field name="suffix">/%(fiscal_year)s</field>
+    <field name="padding">5</field>
+    <field name="number_next">1</field>
+    <field name="number_increment">1</field>
+    <field name="implementation">standard</field>
+    <field name="active">True</field>
+    <field name="use_date_range">True</field>
+        </record>
+  <record id="seq_customer_code" model="ir.sequence">
+            <field name="name">Customer Code</field>
+            <field name="code">res.partner.customer.code</field>
+            <field name="prefix">CU</field>
+           <field name="suffix">/%(fiscal_year)s</field>
+    <field name="padding">5</field>
+    <field name="number_next">1</field>
+    <field name="number_increment">1</field>
+    <field name="implementation">standard</field>
+    <field name="active">True</field>
+    <field name="use_date_range">True</field>
+        </record>
+           <record id="seq_supplier_code" model="ir.sequence">
+            <field name="name">Supplier Code</field>
+            <field name="code">res.partner.supplier.code</field>
+            <field name="prefix">SU</field>
+            <field name="suffix">/%(fiscal_year)s</field>
+    <field name="padding">5</field>
+    <field name="number_next">1</field>
+    <field name="number_increment">1</field>
+    <field name="implementation">standard</field>
+    <field name="active">True</field>
+    <field name="use_date_range">True</field>
+        </record>
+          <record id="seq_other_code" model="ir.sequence">
+            <field name="name">Other Code</field>
+            <field name="code">res.partner.other.code</field>
+            <field name="prefix">OA</field>
+            <field name="suffix">/%(fiscal_year)s</field>
+    <field name="padding">5</field>
+    <field name="number_next">1</field>
+    <field name="number_increment">1</field>
+    <field name="implementation">standard</field>
+    <field name="active">True</field>
+    <field name="use_date_range">True</field>
+        </record>
+         <record id="seq_invoice_code" model="ir.sequence">
+            <field name="name">Invoice Code</field>
+            <field name="code">res.partner.invoice.code</field>
+            <field name="prefix">IC</field>
+            <field name="padding">5</field>
+        </record>
+        
+         <record id="seq_delivery_code" model="ir.sequence">
+            <field name="name">Delivery Code</field>
+            <field name="code">res.partner.delivery.code</field>
+            <field name="prefix">CU</field>
+             <field name="suffix">/%(fiscal_year)s</field>
+    <field name="padding">5</field>
+    <field name="number_next">1</field>
+    <field name="number_increment">1</field>
+    <field name="implementation">standard</field>
+    <field name="active">True</field>
+    <field name="use_date_range">True</field>
+        </record>
+         <record id="seq_contact_code" model="ir.sequence">
+            <field name="name">Contact Code</field>
+            <field name="code">res.partner.contact.code</field>
+            <field name="prefix">C</field>
+          <field name="suffix">/%(fiscal_year)s</field>
+    <field name="padding">5</field>
+    <field name="number_next">1</field>
+    <field name="number_increment">1</field>
+    <field name="implementation">standard</field>
+    <field name="active">True</field>
+    <field name="use_date_range">True</field>
+        </record>
+
+    <record id="ordered_for_cholamandalam" model="zigma.ordered.for"><field name="name">Cholamandalam</field></record>
+    <record id="ordered_for_cifcl" model="zigma.ordered.for"><field name="name">CIFCL</field></record>
+    <record id="ordered_for_coromandel" model="zigma.ordered.for"><field name="name">Coromandel</field></record>
+    <record id="ordered_for_cumi" model="zigma.ordered.for"><field name="name">CUMI</field></record>
+    <record id="ordered_for_dhaksha" model="zigma.ordered.for"><field name="name">Dhaksha</field></record>
+    <record id="ordered_for_drda" model="zigma.ordered.for"><field name="name">DRDA</field></record>
+    <record id="ordered_for_elcot" model="zigma.ordered.for"><field name="name">ELCOT</field></record>
+    <record id="ordered_for_election" model="zigma.ordered.for"><field name="name">Election</field></record>
+    <record id="ordered_for_govt_puducherry" model="zigma.ordered.for"><field name="name">GOVERNMENT OF PUDUCHERRY - LAW AND JUDICIAL DEPARTMENT</field></record>
+    <record id="ordered_for_igrs" model="zigma.ordered.for"><field name="name">IGRS</field></record>
+    <record id="ordered_for_indian_bank" model="zigma.ordered.for"><field name="name">Indian Bank</field></record>
+    <record id="ordered_for_installation" model="zigma.ordered.for"><field name="name">Installation</field></record>
+    <record id="ordered_for_jipmer" model="zigma.ordered.for"><field name="name">JIPMER</field></record>
+    <record id="ordered_for_judicial_dharmapuri" model="zigma.ordered.for"><field name="name">Judicial Department - Dharmapuri</field></record>
+    <record id="ordered_for_murugappa" model="zigma.ordered.for"><field name="name">Murugappa</field></record>
+    <record id="ordered_for_office_use" model="zigma.ordered.for"><field name="name">Office Use</field></record>
+    <record id="ordered_for_old_stock" model="zigma.ordered.for"><field name="name">Old Stock</field></record>
+    <record id="ordered_for_open_stock" model="zigma.ordered.for"><field name="name">Open Stock</field></record>
+    <record id="ordered_for_project_use" model="zigma.ordered.for"><field name="name">Project Use</field></record>
+    <record id="ordered_for_randstand" model="zigma.ordered.for"><field name="name">Randstand</field></record>
+    <record id="ordered_for_secretariat" model="zigma.ordered.for"><field name="name">Secretariat</field></record>
+    <record id="ordered_for_stock" model="zigma.ordered.for"><field name="name">Stock</field></record>
+    <record id="ordered_for_tvs_logistic" model="zigma.ordered.for"><field name="name">TVS Logistic Services</field></record>
+    <record id="ordered_for_na" model="zigma.ordered.for"><field name="name">#N/A</field></record>
+         
+       
+</odoo>

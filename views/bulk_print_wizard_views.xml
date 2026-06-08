@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_bulk_print_dc_wizard_form" model="ir.ui.view">
+        <field name="name">bulk.print.dc.wizard.form</field>
+        <field name="model">bulk.print.dc.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Bulk Print Delivery Challans">
+                <div class="alert alert-info" role="alert">
+                    <p>
+                        <strong>You have selected <field name="picking_count" readonly="1"/> delivery challan(s) for bulk printing.</strong>
+                    </p>
+                    <p>Choose your preferred output format:</p>
+                    <ul>
+                        <li><strong>Merge into Single PDF:</strong> All DCs will be combined into one PDF file</li>
+                        <li><strong>Download as ZIP file:</strong> Each DC will be a separate PDF file, all packaged in a ZIP</li>
+                    </ul>
+                </div>
+                
+                <group>
+                    <field name="picking_ids" readonly="1">
+                        <tree>
+                            <field name="name"/>
+                            <field name="partner_id"/>
+                            <field name="dc_number"/>
+                            <field name="scheduled_date"/>
+                            <field name="state"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="merge_type" widget="radio"/>
+                </group>
+                
+                <footer>
+                    <button string="Print DCs" type="object" name="action_print" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

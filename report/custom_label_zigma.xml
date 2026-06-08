@@ -1,0 +1,322 @@
+<odoo>   
+        <!-- <record id="action_report_custom_label_zigma" model="ir.actions.report">
+            <field name="name">Zigma Delivery Label</field>
+            <field name="model">stock.picking</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">zigma_erp.report_custom_label_zigma</field>
+            <field name="print_report_name">'DeliveryLabel_%s' % (object.name)</field>
+            <field name="binding_model_id" ref="stock.model_stock_picking"/>
+              <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="stock_picking_label_paperformat"/>
+   -->
+        <!-- </record> -->
+<record id="stock_picking_label_paperformat" model="report.paperformat">
+        <field name="name">Stock Picking Label Format</field>
+        <field name="format">custom</field>
+        <field name="page_height">150</field>
+        <field name="page_width">100</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="orientation">Portrait</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+  
+    <!-- Report Definition -->
+    <record id="action_report_stock_picking_label" model="ir.actions.report">
+        <field name="name">Stock Picking Label</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">zigma_erp.stock_picking_label_template</field>
+        <field name="report_file">zigma_erp.stock_picking_label_template</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="stock_picking_label_paperformat"/>
+    </record>
+
+    <record id="stock_picking_label_paperformat" model="report.paperformat">
+    <field name="name">Stock Picking Label Format</field>
+    <field name="format">custom</field>
+    <field name="page_height">63</field>  <!-- 6.3cm = 63mm -->
+    <field name="page_width">95</field>   <!-- 9.5cm = 95mm -->
+    <field name="margin_top">2</field>    <!-- Reduced margins for small label -->
+    <field name="margin_bottom">2</field>
+    <field name="margin_left">2</field>
+    <field name="margin_right">2</field>
+    <field name="orientation">Portrait</field>
+    <field name="header_line" eval="False"/>
+    <field name="header_spacing">0</field>
+    <field name="dpi">90</field>
+</record>
+ <template id="stock_picking_label_template">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <!-- Create one label per item line -->
+            <t t-foreach="o.item_line_ids" t-as="item_line">
+                <div style="border:1px solid black; font-size:11px; padding:2px; page-break-after: always; width:100%; height:100%; ">
+                    <table width="100%" style="border-collapse: collapse;">
+                        <tr>
+                            <td style="width:20%; vertical-align: top; border-right:1px solid black;">
+                                <img t-if="o.company_id.logo"
+                                     t-att-src="image_data_uri(o.company_id.logo)"
+                                     style="height: 80px; width: 80px;" />
+                            </td>
+                            <td style="padding-left: 5px; font-size: 10px;">
+                                <strong>THE ZIGMA TECHNOLOGIES INDIA (P) LIMITED</strong><br/>
+                                Vaidi Logi Tech Park, SIDCO Industrial Estate,<br/>
+                                Thirumazhisai, Poonamallee, Tiruvallur, Chennai<br/>
+                                Tamil Nadu - 600124. GSTIN: 33AACCT0611K1ZQ<br/>
+                                Customer Care : 9791933074/80/83,<br/>
+                                support@zigmaindia.com
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="2" style="border-top:1px solid black; border-bottom:1px solid black; font-size: 10px;">
+                                <table width="100%">
+                                    <tr>
+                                        <td style="font-size: 10px;"><strong>Ref:</strong> <span t-esc="o.dc_number or o.name"/></td>
+                                        <td style="text-align:right; font-size: 10px;">
+                                            <strong>Pcs:</strong> 
+                                            <span t-esc="item_line_index + 1"/>/<span t-esc="len(o.item_line_ids)"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="2" style="padding-top: 5px;font-size: 10px;">
+                                <strong>To,</strong><br/>
+                                
+                                <t t-if="o.partner_id.name">
+                                    <strong t-esc="o.partner_id.name"/><br/>
+                                </t>
+                                
+                                <t t-if="o.partner_id.street">
+                                    <span t-esc="o.partner_id.street"/><br/>
+                                </t>
+                                <t t-if="o.partner_id.street2">
+                                    <span t-esc="o.partner_id.street2"/><br/>
+                                </t>
+                                
+                                <t t-if="o.partner_id.city or o.partner_id.state_id or o.partner_id.zip">
+                                    <strong>
+                                        <t t-if="o.partner_id.city">
+                                            <span t-esc="o.partner_id.city"/>
+                                        </t>
+                                        <t t-if="o.partner_id.state_id">
+                                            <span t-esc="o.partner_id.state_id.name"/>
+                                        </t>
+                                        <t t-if="o.partner_id.zip">
+                                            <span t-esc="o.partner_id.zip"/>
+                                        </t>
+                                    </strong><br/>
+                                </t>
+                                
+                                <t t-if="o.partner_id.country_id">
+                                    <strong t-esc="o.partner_id.country_id.name"/><br/>
+                                </t>
+                                
+                                <t t-if="o.partner_id.phone or o.partner_id.mobile">
+                                    <t t-if="o.partner_id.phone">
+                                        <span t-esc="o.partner_id.phone"/>
+                                    </t>
+                                    <t t-if="o.partner_id.mobile">
+                                        <t t-if="o.partner_id.phone">, </t>
+                                        <span t-esc="o.partner_id.mobile"/>
+                                    </t>
+                                    <br/>
+                                </t>
+                                
+                                <t t-if="o.partner_id.email">
+                                    <span t-esc="o.partner_id.email"/><br/>
+                                </t>
+                                
+                                <t t-if="o.partner_id.vat">
+                                    <span t-esc="o.partner_id.vat"/><br/>
+                                </t>
+                                
+                                
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+ <!-- <record id="menu_stock_picking_label_print" model="ir.ui.menu">
+        <field name="name">Print Labels</field>
+        <field name="parent_id" ref="stock.menu_stock_warehouse_mgmt"/>
+        <field name="action" ref="action_report_stock_picking_label"/>
+        <field name="sequence" eval="20"/>
+    </record> -->
+        <!-- <template id="report_custom_label_zigma">
+  <t t-call="web.html_container">
+    <t t-foreach="docs" t-as="o">
+      <div style="border:1px solid black; font-size:11px; padding:4px; width:9.5cm; height:6.3cm;">
+        <table width="100%" style="border-collapse: collapse;">
+         
+          <tr>
+            <td style="width:20%; vertical-align: top; border-right:1px solid black;">
+            
+              <img t-att-src="'data:image/png;base64,...'" style="height: 80px; width: 80px;" />
+             
+            </td>
+            <td style="padding-left: 5px;">
+              <strong>THE ZIGMA TECHNOLOGIES INDIA (P) LIMITED</strong><br/>
+              Vaidi Logi Tech Park, SIDCO Industrial Estate,<br/>
+              Thirumazhisai, Poonamallee, Tiruvallur, Chennai<br/>
+              Tamil Nadu – 600124. GSTIN: 33AACCT0611K1ZQ<br/>
+              Customer Care : 9791933074 / 80 / 83,<br/>
+              support@zigmaindia.com
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="2" style="border-top:1px solid black; border-bottom:1px solid black;">
+              <table width="100%">
+                <tr>
+                  <td><strong>Ref:</strong> <span t-esc="o.name"/></td>
+                  <td style="text-align:right;"><strong>Pcs:</strong> 1</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+         
+          <tr>
+            <td colspan="2">
+              <strong>To, Honourable Judge</strong><br/>
+              District Munsif Cum Judicial Magistrate Court,<br/>
+              Inside of taluk office Madathukulam<br/>
+              <strong>TAMIL NADU Tiruppur 642113</strong><br/>
+              <span t-esc="o.partner_id.name"/><br/>
+              <t t-if="o.partner_id.phone">, <span t-esc="o.partner_id.phone"/></t>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </t>
+  </t>
+</template> -->
+
+    <!-- <template id="report_custom_label_zigma">
+  <t t-call="web.html_container">
+    <t t-foreach="docs" t-as="o">
+    <div style="border:1px solid black; font-size:11px; padding:4px; width:9.5cm; height:6.3cm;">
+            <table width="100%" style="border-collapse: collapse;">
+                <tr>
+                    <td style="width:20%; vertical-align: top; border-right:1px solid black;">
+                              <img src="data:image/png;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDE1MCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiByeD0iNSIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTMzLjU3MSA2MS4zOTk5QzI5LjU2OTQgNjUuNzcwMyAyNy40MzExIDY5LjU2NjYgMjUuNjU5NCA3NS4zNDA3QzI0Ljg5NTcgNzcuODI4OSAyNC4xNzU1IDc4LjY3MDUgMjQuMDIyOCA4NC42MzZDMjMuODM5NSA5Mi41Nzk0IDI0Ljc3MzYgOTUuMDIzNiAyNi42MzY5IDEwMC43MDJDMjguODM2MiAxMDcuNDk3IDMxLjMxMDUgMTExLjYxMiAzNS45NTM2IDExNi4zOTdDMzkuMDY5MyAxMTkuNTg3IDQyLjA2MjkgMTIxLjcyNSA0NC45MDM3IDEyMi44MDlDNDYuNzM2NSAxMjMuNTQzIDQ3LjUzMDcgMTIzLjYzOSA1MC41NTQ4IDEyMy42MzlDNTMuNjcwNiAxMjMuNjM5IDU0LjQwMzcgMTIzLjUxMSA1Ni45Njk2IDEyMi42MThDNjEuNzA0MyAxMjAuOTU5IDY3LjMyNDkgMTE3Ljc2OSA2NS40OTIxIDExNy43NjlDNjQuMzkyNCAxMTcuNzY5IDU1LjUwMzQgMTEzLjcxOCA1MS43MTU2IDExMS40ODVDNDkuMzk0MSAxMTAuMTEzIDQ4LjIwMjcgMTA5LjEyNCA0Ni4wMDM0IDEwNi43NjNDNDMuNTU5NyAxMDQuMTE1IDQwLjE5OTYgOTkuNDI2IDQwLjUzNTYgOTkuMTA3QzQwLjU5NjcgOTkuMDQzMiA0MS42OTYzIDk5LjkzNjQgNDIuOTQ4NyAxMDEuMTE3QzUxLjk2IDEwOS41MzkgNTcuNDg4OSAxMTIuODU2IDY0LjIzOTcgMTEzLjc4MUM2Ny42MzAzIDExNC4yNiA3NS4wODM3IDExNC40MTkgNzcuNTU3OSAxMTQuMDY5TDc4Ljk2MzEgMTEzLjg0NVYxMTIuMTIzVjExMC4zNjhMNzcuODMyOSAxMTAuNTU5Qzc1LjI2NyAxMTAuOTc0IDcyLjAyOSAxMTEuMTM0IDcxLjg3NjMgMTEwLjg3OEM3MS43ODQ3IDExMC43MTkgNzEuNjAxNCAxMDkuNTA3IDcxLjUwOTcgMTA4LjE5OUM3MS4xNzM3IDEwNC40MDMgNzAuMTk2MiAxMDAuMzE5IDY5LjE4ODIgOTguNTAwOUM2Ny4wMTk0IDk0LjQ4MTMgNjMuNzUwOSA5MS45OTMgNTQuMDY3NyA4Ni45MjA4QzQyLjgyNjYgODEuMDE5MSA0MC4xNjkgNzkuMTA1IDM3LjkwODYgNzUuMTQ5M0MzNi4wNDUyIDcxLjgzMTUgMzUuNDY0OCA2OS4yMTU2IDM1LjcwOTIgNjUuMDM2NkMzNS44MDA5IDYzLjI1MDEgMzUuOTUzNiA2MS4xNzY2IDM2LjA3NTggNjAuNDEwOUMzNi4xOTggNTkuNjEzNCAzNi4xMzY5IDU5LjA3MTEgMzUuOTUzNiA1OS4wNzExQzM1LjgwMDkgNTkuMDcxMSAzNC43MzE3IDYwLjEyMzggMzMuNTcxIDYxLjM5OTlaIiBmaWxsPSIjMkYxRjUwIi8+CjxwYXRoIGQ9Ik0xMDguMDcxIDUyLjY4N0MxMDYuNzkgNDYuNzg5OSAxMDQuOTM5IDQyLjgzMjUgMTAxLjMwNiAzOC4xMDI3Qzk5Ljc0MTEgMzYuMDY0MyA5OS40NjY2IDM0Ljk3MjYgOTQuNzg3NiAzMS41NDdDODguNTQ2MiAyNy4wMDMxIDg2LjA3ODkgMjYuNDY3NSA4MC41MTY0IDI0Ljk1NjFDNzMuODc2OSAyMy4xMjEgNjkuMjI1MyAyMy4wMDQ0IDYyLjg0MTggMjQuNDA2OEM1OC41NzQ5IDI1LjM1OTUgNTUuMjE2IDI2Ljc4NjggNTIuNzgyIDI4LjY2MjFDNTEuMTg0NSAyOS44NTMyIDUwLjY2OTcgMzAuNDkyMSA0OS4wMDA2IDMzLjEyNTZDNDcuMjgwOSAzNS44MzkgNDYuOTc4MiAzNi41NDc5IDQ2LjI3NTIgMzkuMjc1NUM0NC45ODY1IDQ0LjMxNDMgNDQuNDMxNSA1MC45Njk4IDQ1LjQ0MzEgNDkuMzczN0M0Ni4wNTAxIDQ4LjQxNiA1NC4xOTEyIDQyLjkxMSA1OC4wNjQ5IDQwLjg0NDlDNjAuNDQxNiAzOS41ODAzIDYxLjg4ODcgMzkuMDg4NyA2NC45ODc2IDM4LjQ3NjNDNjguNDUwNiAzNy44MDk1IDc0LjA0OTYgMzcuNDcxNiA3NC4xMTg4IDM3Ljk0MDNDNzQuMTM2MSAzOC4wMjg3IDcyLjgxNTkgMzguNDkzNCA3MS4xODIyIDM4LjkzMjZDNTkuNDgzOCA0Mi4xMzE4IDUzLjc4MzEgNDUuMTE1NiA0OS4zMTg0IDUwLjQ4NEM0Ny4wNjQ5IDUzLjE3MjcgNDIuODIzNyA1OS41NzU1IDQxLjczODMgNjEuOTIzOUw0MS4xNDExIDYzLjI3MDhMNDIuNTE2NiA2NC4yMjE2TDQzLjkxNzUgNjUuMTlMNDQuMzg4NSA2NC4xMDAxQzQ1LjQ3MzYgNjEuNjM2NyA0Ny4xMzM0IDU4LjcyODggNDcuNDIxNCA1OC43MzY3QzQ3LjU5OTQgNTguNzQ0OSA0OC42Njg1IDU5LjI1NDQgNDkuNzYzNCA1OS44OTY1QzUyLjk4MDEgNjEuNjk5MiA1Ni43ODAxIDYzLjEwMTYgNTguNzg4NCA2My4yMjc0QzYzLjE5NDkgNjMuNTU3MiA2Ni45ODU3IDYyLjA4NDIgNzYuMzgwNCA1Ni40NTFDODcuMjk3MiA0OS45MTg4IDkwLjI5MjMgNDguNjYwOSA5NC42OTg1IDQ4Ljg3NTdDOTguMzc2MSA0OS4wODQxIDEwMC43ODUgNTAuMDIyNSAxMDMuOTg3IDUyLjU0MTlDMTA1LjM2MyA1My42MDc3IDEwNi45MzQgNTQuODg1MiAxMDcuNDc4IDU1LjQxNDJDMTA4LjA0OCA1NS45NjA4IDEwOC41MTQgNTYuMjA2OSAxMDguNjE2IDU2LjA0NzNDMTA4LjcgNTUuOTE0MyAxMDguNDQ5IDU0LjQwMjIgMTA4LjA3MSA1Mi42ODdaIiBmaWxsPSIjQTQyQTI1Ii8+CjxwYXRoIGQ9Ik04MC43OTI1IDEyNS43NjJDODYuNDI5MyAxMjcuMTQ0IDkwLjY0NjYgMTI3LjE0MSA5Ni4zMDk2IDEyNS44MDVDOTguNzUwMiAxMjUuMjI5IDk5LjgxMDEgMTI1LjQ1IDEwNC44MDkgMTIyLjU2QzExMS40NTYgMTE4LjY5MyAxMTIuOTk5IDExNi42MTIgMTE2LjczOCAxMTIuMDU0QzEyMS4yMjggMTA2LjYyNiAxMjMuMzY3IDEwMi4zMTEgMTI0Ljk1OSA5NS43MDQyQzEyNi4wMDkgOTEuMjgxNSAxMjYuMjUzIDg3LjUwMyAxMjUuNzA2IDg0LjM5NjJDMTI1LjM4MSA4Mi4zNzQ2IDEyNS4wNTcgODEuNjExMyAxMjMuNTIyIDc4Ljg5MDFDMTIxLjk0MSA3Ni4wODY1IDEyMS40NjQgNzUuNDkxNiAxMTkuNDI0IDczLjYzNkMxMTUuNjUzIDcwLjIxNzUgMTEwLjE2OCA2Ni43NzkgMTExLjA5OCA2OC40MjgyQzExMS42NTYgNjkuNDE3NyAxMTIuODI1IDc5LjQ3MjcgMTEyLjkwNSA4NC4wMTQ0QzExMi45NTIgODYuNzk5NiAxMTIuNzQxIDg4LjM3MzUgMTExLjkwOSA5MS41NTA3QzExMC45NjUgOTUuMDkzNSAxMDguODAxIDEwMC40OTcgMTA4LjM2OCAxMDAuMzU3QzEwOC4yODQgMTAwLjMzNCAxMDguNDYzIDk4Ljg5MTMgMTA4LjgwMSA5Ny4xNjUyQzExMS4xNzYgODQuNzgyMiAxMTEuMTA3IDc4LjEyMzIgMTA4LjQ0NCA3MS41NzlDMTA3LjExOCA2OC4yODUxIDEwMy40NjcgNjEuNDk3NCAxMDEuOTIxIDU5LjQ0OUwxMDEuMDI0IDU4LjI5OEw5OS42MDI3IDU5LjE3MjNMOTguMTU1MSA2MC4wNjI4TDk4Ljg4NjcgNjAuOTgyN0MxMDAuNTMxIDYzLjA4MTEgMTAyLjMwNiA2NS45MTM3IDEwMi4xNzMgNjYuMTgwN0MxMDIuMDg4IDY2LjM0NDEgMTAxLjE4MSA2Ny4xMjQzIDEwMC4xNDggNjcuODcwNkM5Ny4xODY3IDcwLjA5OTcgOTQuMzEzOSA3My4wNTE3IDkzLjMyNTMgNzQuODgxN0M5MS4xMDk3IDc4Ljg3MzMgOTAuNzE1NyA4My4wNzczIDkxLjQ0NTQgOTQuMzY1QzkyLjI4MTYgMTA3LjQ3NiA5Mi4wNTEyIDExMC44MzggODkuOTM0OCAxMTQuODhDODguMTQzMyAxMTguMjQxIDg2LjI3OTYgMTIwLjA5MSA4Mi43MDc3IDEyMS45OTJDODEuMTg3MyAxMjIuODE2IDc5LjM5OSAxMjMuNzMxIDc4LjcwNTMgMTI0LjAxQzc3Ljk4NTMgMTI0LjMwNCA3Ny41Njg5IDEyNC42MzUgNzcuNjYxOSAxMjQuOEM3Ny43Mzk0IDEyNC45MzcgNzkuMTUwNiAxMjUuMzY1IDgwLjc5MjUgMTI1Ljc2MloiIGZpbGw9IiMwMDcwQUMiLz4KPC9zdmc+Cg==" style="height: 80px; width: 80px;" />
+
+
+                        <img t-if="o.company_id.logo"
+                             t-att-src="'/web/image?model=res.company&amp;id=' + str(o.company_id.id) + '&amp;field=logo'"
+                             style="max-height: 80px; max-width: 200px;"/>
+                    </td>
+                    <td style="width:80%; padding-left:5px;">
+                        <strong>THE ZIGMA TECHNOLOGIES INDIA (P) LIMITED</strong><br/>
+                        Vaidi Logi Tech Park, SIDCO Industrial Estate,<br/>
+                        Thirumazhisai, Poonamallee, Tiruvallur, Chennai,<br/>
+                        Tamil Nadu – 600124.<br/>
+                        GSTIN: 33AACCT0611K1ZQ<br/>
+                        Customer Care: 9791933074 / 80 / 83<br/>
+                        support@zigmaindia.com
+                    </td>
+                </tr>
+            
+            <div style="border-top:1px solid black; border-bottom:1px solid black; padding-top:2px;">
+                <table width="100%">
+                    <tr>
+                        <td style="border-right:1px solid black;"><strong>Ref:</strong> DC11523/23-24</td>
+                        <td align="right"><strong>Pcs:</strong> 1/4</td>
+                    </tr>
+                </table>
+            </div>
+            <div style="margin-top:5px;">
+                <strong>To,</strong> <t t-esc="o.partner_id.name"/><br/>
+                <t t-esc="o.partner_id.street"/><br/>
+                <t t-if="o.partner_id.street2"><t t-esc="o.partner_id.street2"/><br/></t>
+                <t t-esc="o.partner_id.city"/> - <t t-esc="o.partner_id.zip"/><br/>
+                <t t-esc="o.partner_id.state_id.name"/> <t t-esc="o.partner_id.country_id.name"/><br/>
+                <t t-if="o.partner_id.phone"><strong><t t-esc="o.partner_id.phone"/></strong><br/></t>
+            </div>
+            </table>
+        </div>
+      
+    </t>
+  </t>
+</template> -->
+
+<!-- 
+<template id="report_custom_label_zigma">
+    <t t-call="web.html_container">
+      <t t-foreach="docs" t-as="o">
+        <div style="border:1px solid black; padding:5mm; font-size:12px; width:9.5cm; height:6.3cm;">
+          <strong>Delivery Label</strong><br/>
+          <strong>Picking:</strong> <span t-esc="o.name"/><br/>
+          <strong>Customer:</strong> <span t-esc="o.partner_id.name"/><br/>
+          <strong>Date:</strong> <span t-esc="o.scheduled_date.strftime('%d-%m-%Y') if o.scheduled_date else ''"/><br/>
+          <strong>Source:</strong> <span t-esc="o.location_id.display_name"/><br/>
+          <strong>Destination:</strong> <span t-esc="o.location_dest_id.display_name"/><br/>
+     
+        </div>
+      </t>
+    </t>
+  </template> -->
+<!-- <template id="report_custom_label_zigma">
+    <t t-call="web.html_container">
+
+        <div style="border:1px solid black; font-size:11px; padding:4px; width:9.5cm; height:6.3cm;">
+            <table width="100%" style="border-collapse: collapse;">
+                <tr>
+                    <td style="width:20%; vertical-align: top; border-right:1px solid black;">
+                        <img t-if="o.company_id.logo"
+                             t-att-src="'/web/image?model=res.company&amp;id=' + str(o.company_id.id) + '&amp;field=logo'"
+                             style="max-height: 80px; max-width: 200px;"/>
+                    </td>
+                    <td style="width:80%; padding-left:5px;">
+                        <strong>THE ZIGMA TECHNOLOGIES INDIA (P) LIMITED</strong><br/>
+                        Vaidi Logi Tech Park, SIDCO Industrial Estate,<br/>
+                        Thirumazhisai, Poonamallee, Tiruvallur, Chennai,<br/>
+                        Tamil Nadu – 600124.<br/>
+                        GSTIN: 33AACCT0611K1ZQ<br/>
+                        Customer Care: 9791933074 / 80 / 83<br/>
+                        support@zigmaindia.com
+                    </td>
+                </tr>
+            </table>
+
+            <div style="border-top:1px solid black; border-bottom:1px solid black; margin-top:4px; padding-top:2px;">
+                <table width="100%">
+                    <tr>
+                        <td style="border-right:1px solid black;">
+                            <strong>Delivery Ref:</strong> <t t-esc="o.name"/>
+                        </td>
+                        <td align="right">
+                            <strong>Scheduled Date:</strong> 
+                            <t t-esc="o.scheduled_date.strftime('%d-%m-%Y') if o.scheduled_date else ''"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+         
+            <div style="margin-top:5px;">
+                <strong>To,</strong> <t t-esc="o.partner_id.name"/><br/>
+                <t t-esc="o.partner_id.street"/><br/>
+                <t t-if="o.partner_id.street2"><t t-esc="o.partner_id.street2"/><br/></t>
+                <t t-esc="o.partner_id.city"/> - <t t-esc="o.partner_id.zip"/><br/>
+                <t t-esc="o.partner_id.state_id.name"/> <t t-esc="o.partner_id.country_id.name"/><br/>
+                <t t-if="o.partner_id.phone"><strong><t t-esc="o.partner_id.phone"/></strong><br/></t>
+            </div>
+        </div>
+
+    </t>
+</template> -->
+
+</odoo>

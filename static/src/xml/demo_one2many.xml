@@ -1,0 +1,14 @@
+<templates xml:space="preserve">
+    <t t-name="zigma_erp.DemoMovesListRenderer.RecordRow" t-inherit-mode="primary" t-inherit="web.ListRenderer.RecordRow">
+        <xpath expr="//tr/t[1]" position="inside">
+            <t t-if="column.type === 'opendetaildemo'">
+                <td class="o_data_cell cursor-pointer o_list_button">
+                    <t t-if="record.resModel === 'demo.inward.line' ">
+                        <button name="Open Outward" class="btn btn-link fa fa-list" t-on-click="() => props.openRecord(record)"/>
+                    </t>
+                </td>
+            </t>
+           
+        </xpath>
+    </t>
+</templates>
